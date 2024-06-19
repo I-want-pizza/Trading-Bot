@@ -4,12 +4,10 @@ import ru.trading.data.API;
 import ru.trading.data.Constants;
 import ru.trading.data.StockData;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {

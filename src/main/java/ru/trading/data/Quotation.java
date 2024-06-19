@@ -8,7 +8,6 @@ public class Quotation {
     public Quotation(Calendar date, Candle candle) {
         this.date = date;
         this.candle = candle;
-
     }
     @Override
     public String toString() {
