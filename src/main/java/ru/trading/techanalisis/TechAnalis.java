@@ -3,8 +3,11 @@ package ru.trading.techanalisis;
 import ru.trading.data.Candle;
 import ru.trading.data.StockData;
 
-public class Fibonacсi {
-    private Range findMinMaxPrices(StockData stockData){
+public class TechAnalis {
+    static final int COUNT_DAYS = 120;
+    private static StockData stockData;
+    private static Range range = findMinMaxPrices();
+    private static Range findMinMaxPrices(){
         if (stockData.isEmpty()){
             return null;
         }
@@ -12,7 +15,7 @@ public class Fibonacсi {
         float maxPrice = stockData.get(0).getCandle().getMaxPrice();
         int minIndex = 0;
         int maxIndex = 0;
-        for (int i = 1; i < stockData.size(); i++){
+        for (int i = 1; i < stockData.size() && i < COUNT_DAYS; i++){
             Candle candle = stockData.get(i).getCandle();
             if(candle.getMinPrice() < minPrice){
                 minPrice = candle.getMinPrice();
@@ -59,8 +62,7 @@ static final float TWO_LEVEL_FIB = 0.618f;
 static final float THREE_LEVEL_FIB = 0.5f;
 static final float FOUR_LEVEL_FIB = 0.382f;
 static final float FIVE_LEVEL_FIB = 0.236f;
-    private float[] buildingFibonacciLevels(StockData stockData){
-        Range range = findMinMaxPrices(stockData);
+    private float[] buildingFibonacciLevels(){
         float delta = range.getMaxPrice() - range.getMinPrice();
         float[] fibonacciLevels = new float[7];
         fibonacciLevels [0] = range.minPrice;
@@ -72,4 +74,22 @@ static final float FIVE_LEVEL_FIB = 0.236f;
         fibonacciLevels [5] = delta * FIVE_LEVEL_FIB + range.minPrice;
         return fibonacciLevels;
     }
+
+    private boolean isTrend(){
+        return range.maxIndex - range.minIndex > 0;
+    }
+
+    private float[] entryPoints(){
+        float[] entryPoints = new float[14];
+        float[] fibLevels = buildingFibonacciLevels();
+        for (int i = 0; i < entryPoints.length; i++){
+            if (i % 2 == 0){
+                entryPoints[i] = fibLevels[i/2];
+            } else{
+                entryPoints[i] = fibLevels[(i-1)/2] * 0.015f;
+            }
+        }
+        return entryPoints;
+    }
+
 }
