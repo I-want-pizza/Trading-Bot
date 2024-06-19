@@ -11,6 +11,15 @@ public class Candle {
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
     }
+    @Override
+    public String toString() {
+        return "Candlestick{" +
+                "openPrice=" + openPrice +
+                ", closePrice=" + closePrice +
+                ", maxPrice=" + maxPrice +
+                ", minPrice=" + minPrice +
+                '}';
+    }
     public float getVolume() {
         return openPrice - closePrice;
     }

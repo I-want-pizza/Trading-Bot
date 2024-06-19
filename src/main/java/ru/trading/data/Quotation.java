@@ -10,6 +10,13 @@ public class Quotation {
         this.candle = candle;
 
     }
+    @Override
+    public String toString() {
+        return "Quotation{" +
+                "date=" + date +
+                ", candle=" + candle +
+                '}';
+    }
     public Calendar getDate() {
         return date;
     }
