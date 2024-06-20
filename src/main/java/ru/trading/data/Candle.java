@@ -1,10 +1,10 @@
 package ru.trading.data;
 
 public class Candle {
-    private float openPrice;
-    private float closePrice;
-    private float maxPrice;
-    private float minPrice;
+    private final float openPrice;
+    private final float closePrice;
+    private final float maxPrice;
+    private final float minPrice;
     public Candle(float openPrice, float closePrice, float maxPrice, float minPrice) {
         this.openPrice = openPrice;
         this.closePrice = closePrice;
@@ -13,7 +13,7 @@ public class Candle {
     }
     @Override
     public String toString() {
-        return "Candlestick{" +
+        return "Candle{" +
                 "openPrice=" + openPrice +
                 ", closePrice=" + closePrice +
                 ", maxPrice=" + maxPrice +

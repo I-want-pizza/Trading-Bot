@@ -11,7 +11,7 @@ public class StockData extends LinkedList<Quotation> {
     public StockData(DataScale scale) {
         this.scale = scale;
     }
-    private DataScale scale;
+    private final DataScale scale;
 
     private StockData toInterval(int minInterval, DataScale scale) {
         StockData data = new StockData(scale);
@@ -36,13 +36,13 @@ public class StockData extends LinkedList<Quotation> {
         return data;
     }
 
-    public StockData toHour() {
+    /*public StockData toHour() {
         return toInterval(Constants.MinutesInHour, DataScale.HOUR);
-    }
+    }*/
 
-    public StockData toDay() {
+    /*public StockData toDay() {
         return toInterval(Constants.MinutesInDay, DataScale.DAY);
-    }
+    }*/
 
     public StockData toWeek() {
         return toInterval(Constants.MinutesInWeek, DataScale.WEEK);

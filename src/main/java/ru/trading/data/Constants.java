@@ -8,4 +8,5 @@ public interface Constants {
     String propertiesFileName = "config.properties";
     String apiProperty = "api.key";
     String timePattern = "yyyy-MM-dd";
+    String configError = "Unable to find config.properties";
 }
