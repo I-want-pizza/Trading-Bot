@@ -14,21 +14,20 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class API {
-    private static final String BASE_URL = "https://financialmodelingprep.com/api/v3/historical-chart/1day";
     private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.timePattern);
     public static StockData getHistoricalData(String symbol, Calendar from, Calendar to) throws IOException {
         OkHttpClient client = new OkHttpClient();
         String api_key = getApiKey();
 
-        String url = BASE_URL + "/" + symbol + "?apikey=" + api_key;
+        String url = Constants.baseApiUrl + Constants.slash + symbol + Constants.apiUrlProperty + api_key;
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                System.err.println("Request failed: " + response);
-                throw new IOException("Unexpected code " + response);
+                System.err.println(Constants.requestError + response);
+                throw new IOException(Constants.unexpectedCodeError + response);
             }
 
             String jsonData = response.body().string();
@@ -39,11 +38,11 @@ public class API {
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                String dateTimeStr = jsonObject.get("date").getAsString();
-                float openPrice = jsonObject.get("open").getAsFloat();
-                float closePrice = jsonObject.get("close").getAsFloat();
-                float highPrice = jsonObject.get("high").getAsFloat();
-                float lowPrice = jsonObject.get("low").getAsFloat();
+                String dateTimeStr = jsonObject.get(Constants.jsonDate).getAsString();
+                float openPrice = jsonObject.get(Constants.jsonOpen).getAsFloat();
+                float closePrice = jsonObject.get(Constants.jsonClose).getAsFloat();
+                float highPrice = jsonObject.get(Constants.jsonMax).getAsFloat();
+                float lowPrice = jsonObject.get(Constants.jsonMin).getAsFloat();
 
                 Calendar dateTime = Calendar.getInstance();
                 try {
