@@ -1,5 +1,5 @@
 package ru.trading.data;
-
+//свеча
 public class Candle {
     private float openPrice;
     private float closePrice;
