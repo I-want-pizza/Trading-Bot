@@ -1,6 +1,6 @@
 package ru.trading.data;
 
-public class Stocks {
+public class Stock {
     private String name;
     private StockData stockData;
 }
