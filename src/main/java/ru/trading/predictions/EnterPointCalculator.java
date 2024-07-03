@@ -4,14 +4,12 @@ import ru.trading.data.Quotation;
 import ru.trading.data.Stock;
 import ru.trading.data.StockData;
 
-import java.util.Arrays;
-
 public class EnterPointCalculator {
     private static final float EPS = 0.001f;
     private static final float DAY_CANDLE_SEARCH_INTERVAL = 120;
     private static final float[] FIBONACCI_COEFFICIENTS = new float[]
             {0F, 0.236F, 0.382F, 0.5F, 0.618F, 0.786F, 1F, 1.21F, 1.61F};
-    private static final float ERROR_COEFFICIENT = 0.98F;
+    private static final float ERROR_COEFFICIENT = 1.02F;
 
     private static class Extremums {
         private Quotation min;
@@ -21,6 +19,13 @@ public class EnterPointCalculator {
     public float[] calculateEnterPoints(Stock stock) {
         Extremums extremums = findExtremums(stock);
         float[] fibonacciLevels = calculateFibonacciLevels(extremums);
+
+        float[] enterPoints = new float[fibonacciLevels.length];
+        for (int i = 0; i < fibonacciLevels.length; i++) {
+            enterPoints[i] = fibonacciLevels[i] * ERROR_COEFFICIENT;
+        }
+
+        return enterPoints;
     }
 
     private float[] calculateFibonacciLevels(Extremums extremums) {
