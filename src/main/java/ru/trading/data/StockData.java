@@ -3,9 +3,17 @@ package ru.trading.data;
 import ru.trading.data.Constants;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class StockData extends LinkedList<Quotation> {
+    private static class QuotationComparator implements Comparator<Quotation> {
+        @Override
+        public int compare(Quotation o1, Quotation o2) {
+            return o1.getDate().compareTo(o2.getDate());
+        }
+    }
+
     public StockData() {
         this.scale = DataScale.MINUTE;
     }
@@ -46,5 +54,9 @@ public class StockData extends LinkedList<Quotation> {
 
     public StockData toMonth() {
         return toInterval(Constants.MinutesInMonth, DataScale.MONTH);
+    }
+
+    public void sort() {
+        this.sort(new QuotationComparator());
     }
 }

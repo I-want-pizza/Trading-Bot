@@ -11,9 +11,15 @@ public class EnterPointCalculator {
             {0F, 0.236F, 0.382F, 0.5F, 0.618F, 0.786F, 1F, 1.21F, 1.61F};
     private static final float ERROR_COEFFICIENT = 1.02F;
 
+
     private static class Extremums {
         private Quotation min;
         private Quotation max;
+
+        public Extremums(Quotation min, Quotation max) {
+            this.min = min;
+            this.max = max;
+        }
     }
 
     public float[] calculateEnterPoints(Stock stock) {
@@ -41,10 +47,15 @@ public class EnterPointCalculator {
     }
 
     private Extremums findExtremums(Stock stock) {
-        Extremums transmitter = new Extremums();
         StockData quotations = stock.getStockData();
 
-        for (int i = 0; i < Math.max(quotations.size(), DAY_CANDLE_SEARCH_INTERVAL); i++) {
+        if (quotations.size() < 2) {
+            throw new IllegalArgumentException();
+        }
+
+        Extremums transmitter = new Extremums(quotations.get(0), quotations.get(0));
+
+        for (int i = 1; i < Math.max(quotations.size(), DAY_CANDLE_SEARCH_INTERVAL); i++) {
             Quotation quotation = quotations.get(i);
             if (quotation.getCandle().getClosePrice() > transmitter.max.getCandle().getClosePrice()) {
                 transmitter.max = quotation;

@@ -16,7 +16,9 @@ import java.util.Properties;
 
 public class API {
     private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.timePattern);
+
     public static StockData getHistoricalData(String symbol, Calendar from, Calendar to) throws IOException {
+
         OkHttpClient client = new OkHttpClient();
         String api_key = getApiKey();
 
@@ -61,6 +63,7 @@ public class API {
             return candlesticks;
         }
     }
+
     public static String getApiKey() throws IOException {
         Properties properties = new Properties();
         try (InputStream input = API.class.getClassLoader().getResourceAsStream(Constants.propertiesFileName)) {
