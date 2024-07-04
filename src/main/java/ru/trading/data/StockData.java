@@ -47,10 +47,15 @@ public class StockData extends LinkedList<Quotation> {
         return data;
     }
 
-
+    /**
+     * Method for converting StockData to week period
+     */
     public StockData toWeek() {
         return toInterval(Constants.MinutesInWeek, DataScale.WEEK);
     }
+    /**
+     * Method for converting StockData to month period
+     */
 
     public StockData toMonth() {
         return toInterval(Constants.MinutesInMonth, DataScale.MONTH);

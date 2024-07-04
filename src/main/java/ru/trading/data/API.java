@@ -16,6 +16,13 @@ import java.util.Properties;
 
 public class API {
     private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.timePattern);
+    /**
+     * Method for getting historical data of quotation
+     * @param symbol Symbol of quotation to get historical data
+     * @param from Historical data starting date
+     * @param to Historical data ending date
+     * @return Stock data containing fetched data
+     */
 
     public static StockData getHistoricalData(String symbol, Calendar from, Calendar to) throws IOException {
 
@@ -64,7 +71,7 @@ public class API {
         }
     }
 
-    public static String getApiKey() throws IOException {
+    private static String getApiKey() throws IOException {
         Properties properties = new Properties();
         try (InputStream input = API.class.getClassLoader().getResourceAsStream(Constants.propertiesFileName)) {
             if (input == null) {
