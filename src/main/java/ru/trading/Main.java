@@ -18,40 +18,35 @@ import static ru.trading.data.API.getHistoricalData;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-        //Твое новое
-        String symbol = "NVDA"; // Apple on US exchange
+        // Getting historical data example
+        String symbol = "NVDA"; // Nvidia on US exchange
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
 
-        // Example: Fetch data from the last 200 days (no holidays)
+        // Fetch data from the last year (no holidays)
         from.add(Calendar.DAY_OF_YEAR, -360);
-
         StockData historicalData = getHistoricalData(symbol, from, to);
-        if (historicalData.isEmpty()) {
-            System.out.println("No data found.");
-        } else {
-            for (Quotation quotation : historicalData) {
-                System.out.println(quotation.getCandle() + " " + quotation.getDate());
-            }
-        }
+
+//        Printing fetched stock data
+//        if (historicalData.isEmpty()) {
+//            System.out.println("No data found.");
+//        } else {
+//            for (Quotation quotation : historicalData) {
+//                System.out.println(quotation.getCandle() + " " + quotation.getDate());
+//            }
+//        }
+
+        // Calculating entry points example
+        EnterPointCalculator calculator = new EnterPointCalculator();
+        Stock stock = new Stock("NVDA", historicalData);
+        System.out.println(Arrays.toString(calculator.calculateEnterPoints(stock)));
+
+        // Calculating exit points example
         TechAnalis techAnalis = new TechAnalis(historicalData);
         float[] points = techAnalis.entryPoints();
         System.out.println(Arrays.toString(points));
 
 
-        // Моё старое
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(Constants.timePattern);
-        start.setTime(sdf.parse("2030-01-01"));
-        end.setTime(sdf.parse("2001-01-01"));
-        StockData data = API.getHistoricalData("IBM", start, end);
-        System.out.println(data);
-
-        EnterPointCalculator calculator = new EnterPointCalculator();
-
-        Stock stock = new Stock("IBM", data);
-        System.out.println(Arrays.toString(calculator.calculateEnterPoints(stock)));
 
     }
 }
